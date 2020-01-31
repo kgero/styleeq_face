@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Style EQ</title>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif+KR:200,300,400,500,600,700,900&display=swap" rel="stylesheet">
+
+    <script src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+
+    <style>
+      body {
+        font-size: 16px;
+      }
+      dd {
+        margin-bottom: 20px;
+      }
+      h1 {
+        /*font-family: 'Playfair Display', serif;*/
+        /*font-size: 60px;*/
+      }
+      h2 {
+        /*font-family: 'Playfair Display', serif;*/
+        /*font-size: 60px;*/
+      }
+      p.tag {
+        /*font-family: 'Playfair Display', serif;*/
+        font-size: 18px;
+      }
+      div.footer {
+        /*display: none;*/
+        /*position: fixed;*/
+        /*bottom: 0;*/
+        /*width: 70%;*/
+      }
+      .usage {
+        font-style: italic;
+      }
+      .spin {
+          animation: spin infinite 2s linear;
+      }
+      @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+      }
+      .cool-font {
+        font-family: 'Playfair Display', serif;
+      }
+    </style>
+
+    <meta charset='utf-8'>
+  </head>
+  <body>
+    <div class="container-fluid">
+
+      <div class="row">
+        <div class="col-md-12">
+          
+          <div class="text-center">
+
+            <h1><br />Style EQ 🎛️</h1>
+            <p class="tag text-muted">
+              Transfer text into a new literary style! <br />
+            </p>
+            
+          </div>
+        </div>
+      </div>
+
+      <p><br /></p>
+      <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <p>
+              Type your own text below, or select a famous passage from literature.
+              Learn more below.
+            </p>
+            <textarea class="form-control text-in" placeholder="That even the powers of time can be altered for a single purpose?"></textarea>
+
+            <br />
+
+            <button type="button" class="btn btn-sm btn-primary make-gothic">Make Gothic</button>
+            <button type="button" class="btn btn-sm btn-primary make-scifi">Make Sci-Fi</button>
+            <button type="button" class="btn btn-sm btn-primary make-phil">Make Philosophical</button>
+
+        </div>
+      </div>
+
+      <p><br /></p>
+      <div class="row">
+        <div class="col-md-4">
+          <p>Original sentence:</p>
+          <div class="alert alert-primary">
+            <div class="original">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+
+          <div class="pivot-hidden text-center">
+            <p><br /></p>
+            <p>>>>>>>>>>>>>>>>>></p>
+            <button type="button" class="btn btn-sm btn-light show-pivot">show pivots</button>
+          </div>
+
+          <div class="pivot-shown">
+            <p>Pivot sentence:</p>
+            <div class="alert alert-secondary">
+              <div class="pivot-loader spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+              <div class="pivot">
+              </div>
+
+            </div>
+            <button type="button" class="btn btn-sm btn-light hide-pivot">hide pivots</button>
+
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <p>Transferred sentence:</p>
+          <div class="alert alert-success">
+            <div class="transfer-loader spinner-border" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <div class="transfer">
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <p><br /></p>
+      <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+          <h4>About</h4>
+          <p>
+            Style EQ is a neural-network based style transfer system. It was designed and built by Chris Kedzie and Katy Gero.
+          </p>
+          <p>
+            <strong>How it works:</strong> Given an input sentence, it first finds a "pivot" sentence with similar length and parts-of-speech that is in the desired style. The idea is to make the input sentence more syntacticaly similar to the pivot sentence. The neural network then takes the input sentence stripped of its syntactic features (punctuation, prepositions, etc.) and tries to rewrite the sentence with the syntactic feautres of the pivot sentence.
+          </p>
+          <p>
+            StyleEQ is based on research published on our paper Low-Level Linguistic Controls for Style Transfer and Content Preservation.
+          </p>
+        </div>
+      </div>
+
+          
+        
+          
+          
+
+    </div>
+  </body>
+</html>
