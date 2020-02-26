@@ -20,12 +20,27 @@ var pivot_obj;
 
 function transfer_fromgenre(genre) {
   var text_in = $('.text-in').val();
-  console.log('text_in', text_in);
+  
+  if (text_in.indexOf('.') == -1) { text_list = [text_in]; } 
+  else { 
+    prelim_list = text_in.split("."); 
+    text_list = [];
+    for (var i=0; i< prelim_list.length; i++) {
+      if (prelim_list[i] !== "" && prelim_list[i] !== " ") { text_list.push(prelim_list[i] + "."); }
+    }
+  }
+
+  if (text_list.length > 1) { multi_sentence = true; }
+  else {multi_sentence = false; }
+  num_sentences = text_list.length;
+  
+  console.log('text_list', text_list);
   $('.original').empty().append(text_in);
 
   // get pivots
   var endpoint = 'http://0.0.0.0:5000/styleeq/api/v1.0/getpivots';
-  var data = {'sources': [text_in], 'genre': genre, 'num_pivots': 3};
+  var num_pivots = 3;
+  var data = {'sources': text_list, 'genre': genre, 'num_pivots': num_pivots};
   $('.pivots-div').empty();
   $('.transfers-div').empty();
   $('.pivot-loader').show();
@@ -42,10 +57,13 @@ function transfer_fromgenre(genre) {
       console.log('getpivots response:', resp1);
       pivot_obj = resp1;
 
-      for (var i = 0; i < resp1.pivots[0].length; i++) {
-        var pivot = resp1.pivots[0][i].original;
+      for (var i=0; i < num_pivots; i++) {
+        var pivot = "";
+        for (var j=0; j < num_sentences; j++) {
+          pivot = pivot + ' ' + resp1.pivots[j][i].original;
+        }
         add_pivot(pivot);
-        add_pivot_controls(resp1, i);
+        if (num_sentences == 1) { add_pivot_controls(resp1, i); }
       }
       
       transfer_frompivots(resp1);
@@ -75,8 +93,14 @@ function transfer_frompivots(pivot_obj) {
       $('.transfer-loader').hide();
       console.log('frompivots response:', resp2);
 
-      for (var i = 0; i < resp2.outputs[0].transfers.length; i++) {
-        var transfer = resp2.outputs[0].transfers[i].transfer;
+      var num_sentences = resp2.outputs.length;
+      var num_pivots = resp2.outputs[0].transfers.length;
+
+      for (var i = 0; i < num_pivots; i++) {
+        var transfer = "";
+        for (var j = 0; j < num_sentences; j++) {
+          transfer = transfer + ' ' + resp2.outputs[j].transfers[i].transfer;
+        }
         add_transfer(transfer);
       }
       
@@ -96,6 +120,7 @@ function add_pivot(text) {
   $(".pivots-div").append(pivot_div);
 }
 
+// index is the pivot number?
 function add_pivot_controls(pivot_obj, index) {
   
   var rowDiv = $("<div />").addClass('form-row');
